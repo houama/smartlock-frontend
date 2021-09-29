@@ -1,3 +1,19 @@
+# Project Overview
+
+
+This project is a front-end of room booking system for UMN Library.
+Created by Malisius.
+# Todo List
+- [x] Add dependency
+- [ ] Landing page
+- [ ] Sign in Page
+- [ ] Home page
+- [ ] Booking page
+- [ ] Booking detail page
+- [ ] Profile page
+- [ ] Alert
+- [ ] API integration
+- [ ] JWT (authentication and authorization)
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
