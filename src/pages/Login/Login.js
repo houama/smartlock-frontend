@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Input from './Input';
-import { Container, Paper, Grid, Button, Typography, Grow, AppBar, Toolbar, IconButton, ThemeProvider, Link } from '@mui/material';
+import { Container, Paper, Grid, Button, Typography, Grow, IconButton, ThemeProvider, Link } from '@mui/material';
 import useStyles from './styles';
-import { theme } from './styles';
+import Appbar from '../../components/Appbar';
 
 const Login = () => {
 
@@ -41,20 +41,10 @@ const Login = () => {
 
     return(
         <div>
-            <ThemeProvider theme={theme}>
-                <AppBar position="static">
-                    <Toolbar>
-                        <div className={classes.appBarTitle}>
-                            E - LIBRARY
-                        </div>
-                        <div className={classes.appBarNav}>
-                        <Button variant="text" component="a">
-                            <span className={classes.navText}>Home</span>
-                        </Button>
-                        </div>
-                        <Button color="inherit">Sign Up</Button>
-                    </Toolbar>
-                </AppBar>
+            {/* <ThemeProvider theme={theme}> */}
+
+                <Appbar/>
+                
                 <Grow in={true} timeout={1000}>
                     <Container component='main' maxWidth='xs'>
                         <Paper className={classes.paper} elevation={3}>
@@ -97,7 +87,7 @@ const Login = () => {
                         </Paper>
                     </Container>
                 </Grow>
-            </ThemeProvider>
+            {/* </ThemeProvider> */}
         </div>
     )
 }

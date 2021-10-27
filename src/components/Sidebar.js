@@ -1,22 +1,47 @@
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
+import { makeStyles } from '@mui/styles'
+import useStyles from './styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import SpeedIcon from '@mui/icons-material/Speed';
 import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import MemoryIcon from '@mui/icons-material/Memory';
 import { Button, Typography, ListItem, ListItemIcon, Divider, List, Toolbar, Drawer as MuiDrawer, AppBar as MuiAppBar } from '@mui/material';
-import useStyles from './styles';
 import { Link } from 'react-router-dom';
 
+
+// Sidebar List
+const menu = [
+    {
+        title: 'Dashboard',
+        path: '/',
+        icon: <SpeedIcon/>
+
+    },
+    {
+        title: 'Bookings',
+        path: '/bookings',
+        icon: <CollectionsBookmarkIcon/>
+    },
+    {
+        title: 'Rooms',
+        path: '/rooms',
+        icon: <MeetingRoomIcon/>
+    },
+    {
+        title: 'Nodes',
+        path: '/nodes',
+        icon: <MemoryIcon/>
+    }
+];
+
+// Style
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -84,47 +109,42 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-const menu = [
-    {
-        title: 'Dashboard',
-        path: '/',
-        icon: <SpeedIcon/>
+// const useStyles = makeStyles((theme) => ({
+//     selectedDrawer: {
+//         backgroundColor: secondary
+//     }
+// }))
 
-    },
-    {
-        title: 'Bookings',
-        path: '/bookings',
-        icon: <CollectionsBookmarkIcon/>
-    },
-    {
-        title: 'Rooms',
-        path: '/rooms',
-        icon: <MeetingRoomIcon/>
-    },
-    {
-        title: 'Nodes',
-        path: '/nodes',
-        icon: <MemoryIcon/>
-    }
-];
 
-export default function MiniDrawer() {
+const Sidebar = ({selectedDrawer}) => {
+
   const theme = useTheme();
-  const classes = useStyles()
-  const [open, setOpen] = React.useState(false);
+  const classes = useStyles();
 
+  const [open, setOpen] = React.useState(true);
+
+
+
+  // Open drawer
   const handleDrawerOpen = () => {
     setOpen(true);
   };
 
+
+  // Close drawer
   const handleDrawerClose = () => {
     setOpen(false);
   };
 
+  React.useEffect(() =>{
+    document.body.classList.add(classes.body)
+    
+  },[])
+
   return (
     <div>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} color="default">
         <Toolbar>
         <IconButton
             color="inherit"
@@ -150,7 +170,9 @@ export default function MiniDrawer() {
           
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+
+
+      <Drawer variant="permanent" open={open} className={classes.Drawer}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -159,12 +181,20 @@ export default function MiniDrawer() {
         <Divider />
         <List>
           {menu.map((sidebar, index) => (
+              sidebar.title === selectedDrawer ?
+                    <ListItem className={classes.selectedDrawer} key={sidebar.title}>
+                        <ListItemIcon>
+                            {sidebar.icon}
+                        </ListItemIcon>
+                        <ListItemText primary={sidebar.title} />
+                    </ListItem>
+                :
                 <Link to={sidebar.path} style={{textDecoration: 'none'}}>
                     <ListItem button key={sidebar.title}>
-                    <ListItemIcon>
-                        {sidebar.icon}
-                    </ListItemIcon>
-                    <ListItemText primary={sidebar.title} />
+                        <ListItemIcon>
+                            {sidebar.icon}
+                        </ListItemIcon>
+                        <ListItemText primary={sidebar.title} />
                     </ListItem>
                 </Link>
           ))}
@@ -174,3 +204,5 @@ export default function MiniDrawer() {
     </div>
   );
 }
+
+export default Sidebar

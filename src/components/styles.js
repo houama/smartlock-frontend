@@ -1,38 +1,9 @@
-import { createTheme } from '@mui/material';
 import { makeStyles } from '@mui/styles'
 
-export const theme = createTheme({
-  components: {
-    MuiAppBar: {
-        styleOverrides: {
-          root: {
-            backgroundColor: '#00A8E8'
-          }
-        }
-    },
-    MuiTypography: {
-      styleOverrides: {
-        root: {
-          fontFamily: 'Poppins',
-          fontWeight: 'bold'
-        }
-      }
-    },
-    MuiInputLabel: {
-      styleOverrides: {
-        root: {
-          fontFamily: 'Poppins',
-          fontSize: '14px'
-        }
-      }
-    }
-   
-  },
-});
 
-export default makeStyles({
+const useStyles = makeStyles(theme => ({
   body: {
-    backgroundColor: '#007EA7'
+    backgroundColor: '#F8FCFF'
   },
   paper: {
     marginTop: theme.spacing(8),
@@ -83,7 +54,17 @@ export default makeStyles({
     fontSize: '12px',
     cursor: 'pointer'
   },
+  selectedDrawer: {
+    backgroundColor: '#007EA7'
+  },
+  Drawer: {
+    '& .MuiDrawer-paper':{
+      backgroundColor: '#00A8E8'
+    }
+  },
   error: {
     marginTop: theme.spacing(2),
   }
-});
+}));
+
+export default useStyles

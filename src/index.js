@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { createTheme, ThemeProvider } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Provider } from 'react-redux';
 import { store }  from './state/store';
 
@@ -14,20 +14,42 @@ const theme = createTheme({
     },
     secondary: {
       main: '#007EA7'
-    },
+    }
   },
   typography: {
     fontFamily: 'Poppins',
+    h4: {
+      fontWeight: 'bolder'
+    }
   },
+  components: {
+    MuiListItem: {
+      styleOverrides: {
+        root: {
+          borderRadius: '10px',
+          marginLeft: '10px',
+          color: '#ffffff'
+          
+        }
+      }
+    },
+    MuiListItemIcon: {
+      styleOverrides: {
+        root: {
+          color: '#ffffff'
+        }
+      }
+    }
+  }
 })
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
         <App />
-      </ThemeProvider>
-    </Provider>
+      </Provider>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
