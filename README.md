@@ -13,9 +13,11 @@ Created by Malisius.
 - [x] Room page
 - [x] Edit room
 - [x] Create room
+- [x] Delete room
 - [x] Node page
 - [x] Edit node
 - [x] Create node
+- [x] Delete node
 - [ ] Profile page
 - [ ] Alert
 - [ ] API integration
