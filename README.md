@@ -6,10 +6,16 @@ Created by Malisius.
 # Todo List
 - [x] Add dependency
 - [ ] Landing page
-- [ ] Sign in Page
+- [x] Sign in Page
 - [ ] Home page
-- [ ] Booking page
+- [x] Booking page
 - [ ] Booking detail page
+- [x] Room page
+- [x] Edit room
+- [x] Create room
+- [x] Node page
+- [x] Edit node
+- [x] Create node
 - [ ] Profile page
 - [ ] Alert
 - [ ] API integration
