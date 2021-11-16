@@ -58,12 +58,12 @@ export const updateNode = (nodeID, recordData) => async(dispatch) => {
     }
 }
 
-export const deleteData = (recordId) => async(dispatch) => {
+export const deleteNode = (recordId) => async(dispatch) => {
     dispatch(dataLoading(true))
     try{
-        const { data } = await api.deleteRecord(recordId)
+        const { data } = await api.deleteNode(recordId)
 
-        dispatch({type: 'DELETERECORD', payload: data})
+        dispatch({type: 'DELETE_NODE', payload: data})
         dispatch(dataLoading(false))
         dispatch(dataSuccess(true))
         

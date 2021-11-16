@@ -15,11 +15,12 @@ import {
 } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux';
 import { Cancel } from '@mui/icons-material';
-import { updateRoom, createRoom } from '../state/actions/room';
+import { updateRoom, createRoom, deleteRoom } from '../state/actions/room';
+import { updateNode, createNode, deleteNode } from '../state/actions/node';
 
 // import TableSnackBar from './TableSnackBar'
 
-const TableDialog = ({menu, title, isOpen, data, handleClose, isEdit, field, record}) => {
+const TableDialog = ({menu, title, isOpen, data, handleClose, isEdit, isDelete, field, record}) => {
     const [open, setOpen] = useState(false)
     const [recordData, setRecordData] = useState(record)
     
@@ -41,19 +42,31 @@ const TableDialog = ({menu, title, isOpen, data, handleClose, isEdit, field, rec
     },[data, isOpen])
 
     const handleSubmit = () => {
-        if(!isEdit){
+        if(isDelete){
+            if(menu === "room"){
+                dispatch(deleteRoom(data[0]))
+            }else if(menu === "node"){
+                dispatch(deleteNode(data[0]))
+            }
+        }else if(!isEdit){
             if(menu === "room"){
                 dispatch(createRoom(recordData))
+            }else if(menu === "node"){
+                dispatch(createNode(recordData))
             }
-        } else {
+        }else {
             if(menu === "room"){
                 dispatch(updateRoom(recordData[`id`], recordData))
+            }else if(menu === "node"){
+                dispatch(updateNode(recordData[`id`], recordData))
             }
             
         }
 
         handleClose()
     }
+
+    console.log(data)
 
     return (
         <div>
@@ -80,24 +93,14 @@ const TableDialog = ({menu, title, isOpen, data, handleClose, isEdit, field, rec
                     </Box>
                 </DialogTitle>
                 <DialogContent>
-                    {/* <DialogContentText id="alert-dialog-description">
-                        {!isEdit && 'Are you sure want to delete this record ?'}
-                    </DialogContentText> */}
-                    {/* {isEdit && (
-                        
-                        <Grid container spacing={2} direction="column">   
-                            <Grid item>
-                                <TextField disabled value={recordData.uid} variant="outlined"  label="UID"/>
-                            </Grid>
-                            <Grid item>
-                                <TextField disabled value={!recordData.userData ? '' : recordData.userData.name} variant="outlined"  label="Name"/>
-                            </Grid>
-                            <Grid item>
-                                <TextField variant="outlined" value={recordData.temperature} onChange={e => setRecordData({...recordData, temperature: e.target.value})} type="number" label="Temperature"/>
-                            </Grid>
-                        </Grid>
-                    )} */}
-                    <form autoComplete="off" >
+                    {
+                        isDelete ?
+                        <DialogContentText id="alert-dialog-description">
+                            Are you sure want to delete {data[1]} ?
+                        </DialogContentText>
+
+                        :
+
                         <Grid container spacing={3} marginTop={1}>
 
                             {
@@ -178,13 +181,13 @@ const TableDialog = ({menu, title, isOpen, data, handleClose, isEdit, field, rec
 
                             }
                         </Grid>
-                    </form>
+                    }
 
 
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleSubmit} variant="contained" color={isEdit ? 'success' : 'primary'}>
-                        Save
+                        {isDelete ? "Delete" : isEdit ? "Save" : "Create"}
                     </Button>
                     <Button variant="contained" onClick={handleClose} color= {isEdit ? 'error':'secondary'} autoFocus>
                         Cancel

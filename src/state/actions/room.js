@@ -29,7 +29,7 @@ export const createRoom = (recordData) => async(dispatch) => {
     dispatch(dataLoading(true))
     try{
         const { data } = await api.createRoom(recordData)
-        
+
         dispatch(dataLoading(false))
         dispatch(dataSuccess(true))
 
@@ -58,12 +58,12 @@ export const updateRoom = (roomID, recordData) => async(dispatch) => {
     }
 }
 
-export const deleteData = (recordId) => async(dispatch) => {
+export const deleteRoom = (recordId) => async(dispatch) => {
     dispatch(dataLoading(true))
     try{
-        const { data } = await api.deleteRecord(recordId)
+        const { data } = await api.deleteRoom(recordId)
 
-        dispatch({type: 'DELETERECORD', payload: data})
+        dispatch({type: 'DELETE_ROOM', payload: data})
         dispatch(dataLoading(false))
         dispatch(dataSuccess(true))
         

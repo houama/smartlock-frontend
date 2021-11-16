@@ -11,7 +11,9 @@ const Nodes = () => {
 
   const [open, setOpen] = useState(false)
   const [data, setData] = useState()
+  const [deleteData, setDeleteData] = useState([])
   const [isEdit, setIsEdit] = useState(true)
+  const [isDelete, setIsDelete] = useState(false)
   const [title, setTitle] = useState()
 
   
@@ -45,7 +47,9 @@ const Nodes = () => {
                         handleEdit(params)}} >
                     <Edit />
                 </IconButton >  
-                <IconButton color="secondary"  >
+                <IconButton color="secondary"  
+                    onClick={(e) => {
+                      handleDelete(params)}} >
                     <Delete />
                 </IconButton>
             </>
@@ -54,14 +58,23 @@ const Nodes = () => {
 
   const handleEdit = (params) => {
     setData(params.row)
+    setIsDelete(false)
     setIsEdit(true)
     setTitle("Edit Node")
     setOpen(true)
   }
 
   const handleCreate = () => {
+    setIsDelete(false)
     setIsEdit(false)
     setTitle("Create Node")
+    setOpen(true)
+  }
+
+  const handleDelete = (params) => {
+    setDeleteData([params.row.id, params.row.node_name])
+    setIsDelete(true)
+    setTitle("Delete Node")
     setOpen(true)
   }
 
@@ -74,9 +87,10 @@ const Nodes = () => {
       <TableDialog
         menu = "node"
         isEdit = {isEdit}
+        isDelete = {isDelete}
         isOpen = {open}
         title = {title}
-        data = {data}
+        data = {isDelete ? deleteData : data}
         field = {InputData}
         record = {isEdit ? { id: '', node_name: '', node_version: '', room_name: '', status: ''} : { node_name: '', node_version: ''}}
         handleClose = {handleClose}

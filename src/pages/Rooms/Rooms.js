@@ -11,8 +11,10 @@ const Rooms = () => {
 
   const [open, setOpen] = useState(false)
   const [data, setData] = useState()
+  const [deleteData, setDeleteData] = useState([])
   const [isEdit, setIsEdit] = useState(true)
   const [title, setTitle] = useState()
+  const [isDelete, setIsDelete] = useState(false)
 
   
 
@@ -47,7 +49,9 @@ const Rooms = () => {
                         handleEdit(params)}} >
                     <Edit />
                 </IconButton >  
-                <IconButton color="secondary"  >
+                <IconButton color="secondary"  
+                  onClick={(e) => {
+                    handleDelete(params)}} >
                     <Delete />
                 </IconButton>
             </>
@@ -56,6 +60,7 @@ const Rooms = () => {
 
   const handleEdit = (params) => {
     setData(params.row)
+    setIsDelete(false)
     setIsEdit(true)
     setTitle("Edit Room")
     setOpen(true)
@@ -63,7 +68,15 @@ const Rooms = () => {
 
   const handleCreate = () => {
     setIsEdit(false)
+    setIsDelete(false)
     setTitle("Create Room")
+    setOpen(true)
+  }
+
+  const handleDelete = (params) => {
+    setDeleteData([params.row.id, params.row.room_name])
+    setIsDelete(true)
+    setTitle("Delete Room")
     setOpen(true)
   }
 
@@ -77,9 +90,10 @@ const Rooms = () => {
       <TableDialog
         menu = "room"
         isEdit = {isEdit}
+        isDelete = {isDelete}
         isOpen = {open}
         title = {title}
-        data = {data}
+        data = {isDelete ? deleteData : data}
         field = {InputData}
         record = {isEdit ? { id: '', room_name: '', node_id: '', room_status: ''} : { room_name: '', node_id: '', capacity: ''}}
         handleClose = {handleClose}
