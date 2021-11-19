@@ -1,33 +1,55 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom'
 import Input from './Input';
-import { Container, Paper, Grid, Button, Typography, Grow, IconButton, ThemeProvider, Link } from '@mui/material';
+import { 
+    Container, 
+    Paper, 
+    Grid, 
+    Button, 
+    Typography, 
+    Grow, 
+    IconButton, 
+    ThemeProvider, 
+    Link 
+} from '@mui/material';
 import useStyles from './styles';
 import Appbar from '../../components/Appbar';
+
+import { useDispatch, useSelector } from 'react-redux'
+import { signIn } from '../../state/actions/auth'
 
 const Login = () => {
 
     const classes = useStyles()
-
+    const history = useHistory()
+    
     const [showPassword, setShowPassword] = useState(false)
     const [isSignUp, setIsSignUp] = useState(false)
     const [isError, setIsError] = useState(false)
     const [errorMsg, setErrorMsg] = useState('')
+    const [authData, setAuthData] = useState({email: '', password: ''})
+    
+    //Redux
+    const dispatch = useDispatch()
+    const auth = useSelector((state) => state.auth)
 
     const handleShowPassword = () => setShowPassword((prev) => !prev)
 
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        // if(isSignUp) {
-        //     dispatch(signUp(authData, history))
-        // } else {
-        //     dispatch(signIn(authData, history))
-        // }  
+        if(isSignUp) {
+            // dispatch(signUp(authData))
+        } else {
+            dispatch(signIn(authData))
+        }
     }
 
     const handleChange = (e) => {
-        // setAuthData({...authData, [e.target.name]: e.target.value})
-        // setIsError(false)
+        e.preventDefault()
+
+        setAuthData({...authData, [e.target.name]: e.target.value})
+        setIsError(false)
     }
 
     const switchMode = () => {
@@ -35,9 +57,25 @@ const Login = () => {
         setShowPassword(false)
     }
 
-    useEffect(() =>{
-        document.body.classList.add(classes.body)
-    },[])
+    useEffect(() => {
+        // document.body.classList.add(classes.body)
+        
+        if(auth != null){
+            console.log(auth)
+            switch(auth.role){
+                case 'user' : 
+                    history.push('/user/home')
+                    break
+
+                case 'admin' :
+                    history.push('/')
+                    break
+                
+                default: 
+            }
+        }
+
+    },[auth])
 
     return(
         <div>
@@ -54,7 +92,7 @@ const Login = () => {
                                 <Grid container spacing={2} marginTop={4}>
                                     {isSignUp && <Input name="nim" label="NIM" handleChange={handleChange}/>}
 
-                                    <Input name="username" label="Email Address" handleChange={handleChange} autoFocus error={isError}/>
+                                    <Input name="email" label="Email Address" handleChange={handleChange} autoFocus error={isError}/>
                                     
                                     <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? "text" : "password"} handleShowPassword={handleShowPassword} error={isError}/>
                                 </Grid>

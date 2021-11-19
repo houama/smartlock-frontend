@@ -14,7 +14,10 @@ import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import MemoryIcon from '@mui/icons-material/Memory';
 import { Button, Typography, ListItem, ListItemIcon, Divider, List, Toolbar, Drawer as MuiDrawer, AppBar as MuiAppBar } from '@mui/material';
 import { Link } from 'react-router-dom';
-
+import { useHistory } from 'react-router-dom'
+import Cookies from 'js-cookie'
+import { useDispatch } from 'react-redux'
+import { logOut } from '../state/actions/auth'
 
 // Sidebar List
 const menu = [
@@ -120,10 +123,19 @@ const Sidebar = ({selectedDrawer}) => {
 
   const theme = useTheme();
   const classes = useStyles();
+  const history = useHistory()
+
+  // React Redux
+  const dispatch = useDispatch()
 
   const [open, setOpen] = React.useState(true);
 
+  const handleLogout = () => {
 
+    dispatch(logOut(history))
+    history.push('/signin')
+
+  }
 
   // Open drawer
   const handleDrawerOpen = () => {
@@ -166,7 +178,9 @@ const Sidebar = ({selectedDrawer}) => {
                             <span className={classes.navText}>Home</span>
                         </Button>
                         </div>
-                        <Button color="inherit">Logout</Button>
+                        <Button color="inherit" onClick={handleLogout}>
+                          Logout
+                        </Button>
           
         </Toolbar>
       </AppBar>
