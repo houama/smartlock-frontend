@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Appbar from '../../components/Appbar';
 import Sidebar from '../../components/Sidebar';
 import Table from '../../components/DataTable';
@@ -6,32 +6,55 @@ import { Box, IconButton, Button } from '@mui/material';
 import { Edit, Delete, AddCircle } from '@mui/icons-material';
 import TableDialog from '../../components/Dialog';
 import InputData from './InputData';
+import { getRoom } from '../../state/actions/room';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Rooms = () => {
 
   const [open, setOpen] = useState(false)
-  const [data, setData] = useState()
+  const [editData, setEditData] = useState()
   const [deleteData, setDeleteData] = useState([])
   const [isEdit, setIsEdit] = useState(true)
   const [title, setTitle] = useState()
   const [isDelete, setIsDelete] = useState(false)
 
-  
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+      dispatch(getRoom())
+      
+  },[dispatch])
+
+  const data = useSelector((state) => state.rooms)
+
+  let rows = [], columns = []
 
 
-  const rows = [
-    { id: 'LIB001', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
-    { id: 'LIB002', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
-    { id: 'LIB003', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
-    { id: 'LIB004', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
-    { id: 'LIB005', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
-    { id: 'LIB006', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
-    { id: 'LIB007', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
-    { id: 'LIB008', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
-    { id: 'LIB009', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
-    { id: 'LIB0010', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
-    { id: 'LIB0011', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
-];
+  rows = data.rooms.map(item => {
+      const container = {}
+      container['id'] = item._id
+      container['name'] = item.name
+      container['capacity'] = item.capacity
+      container['status'] = item.status
+      container['createdAt'] = item.createdAt
+      container['action'] = ''
+      return container
+  })
+
+
+//   const rows = [
+//     { id: 'LIB001', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
+//     { id: 'LIB002', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
+//     { id: 'LIB003', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
+//     { id: 'LIB004', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
+//     { id: 'LIB005', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
+//     { id: 'LIB006', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
+//     { id: 'LIB007', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
+//     { id: 'LIB008', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
+//     { id: 'LIB009', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
+//     { id: 'LIB0010', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
+//     { id: 'LIB0011', room_name: 'Tongkonan', capacity: 'Sony', status: 'Reserved', node_id: 'NOD001', created_date: '7/15/2021 2:23 PM', updated_date: 5},
+// ];
 
   const column = [
     { field: 'id', headerName: 'Room ID', width: 130 },
@@ -59,7 +82,7 @@ const Rooms = () => {
   ];
 
   const handleEdit = (params) => {
-    setData(params.row)
+    setEditData(params.row)
     setIsDelete(false)
     setIsEdit(true)
     setTitle("Edit Room")
@@ -93,7 +116,7 @@ const Rooms = () => {
         isDelete = {isDelete}
         isOpen = {open}
         title = {title}
-        data = {isDelete ? deleteData : data}
+        data = {isDelete ? deleteData : editData}
         field = {InputData}
         record = {isEdit ? { id: '', room_name: '', node_id: '', room_status: ''} : { room_name: '', node_id: '', capacity: ''}}
         handleClose = {handleClose}

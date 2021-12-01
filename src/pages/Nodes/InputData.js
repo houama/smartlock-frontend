@@ -7,15 +7,14 @@ const InputData = [
     },
     {
         label: 'Node name',
-        name: 'node_name',
+        name: 'name',
         type: 'text',
         creatable: true
     },
     {
         label: 'Node version',
-        name: 'node_version',
-        type: 'text',
-        creatable: true
+        name: 'version',
+        type: 'text'
     },
     {
         label: 'Room name',
@@ -26,7 +25,7 @@ const InputData = [
         label: 'Status',
         name: 'status',
         type: 'option',
-        option : ['Activated', 'Not activated']
+        option : ['Activated', 'Deactivated']
     }
     
 ]

@@ -27,6 +27,8 @@ const TableDialog = ({menu, title, isOpen, data, handleClose, isEdit, isDelete, 
     // const data = useSelector((state) => state.records)
     // const record = currentId ? data.records.find((rec) => rec._id === currentId) : null
 
+    console.log(recordData)
+
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -50,6 +52,7 @@ const TableDialog = ({menu, title, isOpen, data, handleClose, isEdit, isDelete, 
             }
         }else if(!isEdit){
             if(menu === "room"){
+                console.log(recordData)
                 dispatch(createRoom(recordData))
             }else if(menu === "node"){
                 dispatch(createNode(recordData))

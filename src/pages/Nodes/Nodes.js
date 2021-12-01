@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Appbar from '../../components/Appbar';
 import Sidebar from '../../components/Sidebar';
 import Table from '../../components/DataTable';
@@ -6,38 +6,66 @@ import { Box, IconButton, Button } from '@mui/material';
 import { Edit, Delete, AddCircle } from '@mui/icons-material';
 import TableDialog from '../../components/Dialog';
 import InputData from './InputData';
+import { getNodes } from '../../state/actions/node';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Nodes = () => {
 
   const [open, setOpen] = useState(false)
-  const [data, setData] = useState()
+  const [EditData, setEditData] = useState()
   const [deleteData, setDeleteData] = useState([])
   const [isEdit, setIsEdit] = useState(true)
   const [isDelete, setIsDelete] = useState(false)
   const [title, setTitle] = useState()
 
-  
-  const rows = [
-    { id: 'LIB001', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Activated'},
-    { id: 'LIB002', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Not activated'},
-    { id: 'LIB003', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Activated'},
-    { id: 'LIB004', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Activated'},
-    { id: 'LIB005', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Not activated'},
-    { id: 'LIB006', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Activated'},
-    { id: 'LIB007', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Activated'},
-    { id: 'LIB008', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Activated'},
-    { id: 'LIB009', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Activated'},
-    { id: 'LIB0010', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Activated'},
-    { id: 'LIB0011', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Activated'},
-];
+  const dispatch = useDispatch()
 
-  const column = [
+  useEffect(() => {
+      dispatch(getNodes())
+      
+  },[dispatch])
+
+  const data = useSelector((state) => state.nodes)
+
+  let rows = [], columns = []
+
+
+  rows = data.nodes.map(item => {
+      const container = {}
+      container['id'] = item.id
+      container['name'] = item.name
+      container['version'] = item.version
+      container['status'] = item.status
+      container['last_check'] = item.last_check
+      container['RoomId'] = item.RoomId
+      container['createdAt'] = item.createdAt
+      container['updatedAt'] = item.updatedAt
+      container['action'] = ''
+      return container
+  })
+
+  
+  // const rows = [
+  //   { id: 'LIB001', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Activated'},
+  //   { id: 'LIB002', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Not activated'},
+  //   { id: 'LIB003', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Activated'},
+  //   { id: 'LIB004', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Activated'},
+  //   { id: 'LIB005', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Not activated'},
+  //   { id: 'LIB006', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Activated'},
+  //   { id: 'LIB007', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Activated'},
+  //   { id: 'LIB008', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Activated'},
+  //   { id: 'LIB009', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Activated'},
+  //   { id: 'LIB0010', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Activated'},
+  //   { id: 'LIB0011', node_name: 'Tongkonan', node_version: 'Sony', room_id: 'Reserved', room_name: 'NOD001', created_date: '7/15/2021 2:23 PM', status: 'Activated'},
+// ];
+
+columns = [
     { field: 'id', headerName: 'Node ID', width: 130 },
-    { field: 'node_name', headerName: 'Node name', width: 130 },
-    { field: 'node_version', headerName: 'Node version', width: 130},
-    { field: 'room_id', headerName: 'Room ID', width: 130},
+    { field: 'name', headerName: 'Node name', width: 130 },
+    { field: 'version', headerName: 'Node version', width: 130},
+    { field: 'RoomId', headerName: 'Room ID', width: 130},
     { field: 'room_name', headerName: 'Room name', width: 130},
-    { field: 'created_date', headerName: 'Created date', width: 200, type:'dateTime'},
+    { field: 'createdAt', headerName: 'Created date', width: 200, type:'dateTime'},
     { field: 'status', headerName: 'Status', width: 130},
     { field: 'action', headerName: 'Action', width:150, sortable:false, disableClickEventBubbling: true,
         renderCell: (params) => (
@@ -57,7 +85,7 @@ const Nodes = () => {
   ];
 
   const handleEdit = (params) => {
-    setData(params.row)
+    setEditData(params.row)
     setIsDelete(false)
     setIsEdit(true)
     setTitle("Edit Node")
@@ -72,7 +100,7 @@ const Nodes = () => {
   }
 
   const handleDelete = (params) => {
-    setDeleteData([params.row.id, params.row.node_name])
+    setDeleteData([params.row.id, params.row.name])
     setIsDelete(true)
     setTitle("Delete Node")
     setOpen(true)
@@ -90,9 +118,9 @@ const Nodes = () => {
         isDelete = {isDelete}
         isOpen = {open}
         title = {title}
-        data = {isDelete ? deleteData : data}
+        data = {isDelete ? deleteData : EditData}
         field = {InputData}
-        record = {isEdit ? { id: '', node_name: '', node_version: '', room_name: '', status: ''} : { node_name: '', node_version: ''}}
+        record = {isEdit ? { id: '', name: '', version: '', room_name: '', status: ''} : { name: ''}}
         handleClose = {handleClose}
       />
 
@@ -109,7 +137,7 @@ const Nodes = () => {
                   </Button>
                 </Box>
                 <Table
-                    columns={column}
+                    columns={columns}
                     rows={rows}
                 />
             </Box>

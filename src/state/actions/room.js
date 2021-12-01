@@ -9,11 +9,11 @@ export const dataSuccess = (isSuccess) => async (dispatch) => {
     dispatch({type: 'ACTION_SUCCESS', payload: isSuccess})
 }
 
-export const getData = () => async (dispatch) => {
+export const getRoom = () => async (dispatch) => {
     dispatch(dataLoading(true))
     try {
-        // const { data } = await api.getRecord()
-        // dispatch({type: 'FETCHRECORD', payload: data})
+        const { data } = await api.getAllRooms()
+        dispatch({type: 'FETCH_ROOM', payload: data})
         
         dispatch(dataLoading(false))
     }catch (error){
@@ -24,11 +24,11 @@ export const getData = () => async (dispatch) => {
     }
 }
 
-export const createRoom = (recordData) => async(dispatch) => {
+export const createRoom = (roomData) => async(dispatch) => {
     
     dispatch(dataLoading(true))
     try{
-        // const { data } = await api.createRoom(recordData)
+        const { data } = await api.createRoom(roomData)
 
         dispatch(dataLoading(false))
         dispatch(dataSuccess(true))
