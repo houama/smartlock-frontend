@@ -1,14 +1,12 @@
 import * as React from 'react';
-import Appbar from '../../components/Appbar';
-import Sidebar from '../../components/Sidebar';
 
+/*
+Dashboard for User
+*/
 const Dashboard = () => {
   return(
     <div>
-      <Appbar/>
-      <Sidebar
-        selectedDrawer = "Dashboard"
-      />
+      User Page
     </div>
   )
 }
