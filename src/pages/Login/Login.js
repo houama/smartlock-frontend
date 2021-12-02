@@ -64,7 +64,7 @@ const Login = () => {
         if(auth != null){
             switch(auth.role){
                 case 'user' : 
-                    history.push('/user/home')
+                    history.push('/dashboard')
                     break
 
                 case 'admin' :
