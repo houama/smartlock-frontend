@@ -10,6 +10,7 @@ import {
     Grow, 
     IconButton, 
     ThemeProvider, 
+    Box,
     Link 
 } from '@mui/material';
 import useStyles from './styles';
@@ -61,14 +62,13 @@ const Login = () => {
         // document.body.classList.add(classes.body)
         
         if(auth != null){
-            console.log(auth)
             switch(auth.role){
                 case 'user' : 
-                    history.push('/user/home')
+                    history.push('/dashboard')
                     break
 
                 case 'admin' :
-                    history.push('/')
+                    history.push('/admin')
                     break
                 
                 default: 

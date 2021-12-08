@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Appbar from '../../components/Appbar';
-import Sidebar from '../../components/Sidebar';
-import Table from '../../components/DataTable';
+import Appbar from '../../../components/Appbar';
+import Sidebar from '../../../components/Sidebar';
+import Table from '../../../components/DataTable';
 import { Box } from '@mui/material';
 import { column } from './column';
 
