@@ -8,14 +8,15 @@ import {
 
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Login from "./pages/Login/Login";
-// import Bookings from "./pages/Admins/Bookings/Bookings";
-// import Rooms from "./pages/Rooms/Rooms";
-// import Nodes from "./pages/Nodes/Nodes";
+import BookingAdmin from "./pages/Admins/Bookings/Bookings";
+import RoomsAdmin from "./pages/Admins/Rooms/Rooms";
+import NodesAdmin from "./pages/Admins/Nodes/Nodes";
 import NotFound from "./components/Utils/NotFound";
+
 import Admin from "./pages/Dashboard/Admin";
 
 import History from "./pages/Users/History/History";
-import Booking from "./pages/Users/Booking/Booking"
+import Booking from "./pages/Users/Booking/Booking";
 
 import Cookies from "js-cookie";
 import decode from "jwt-decode";
@@ -23,19 +24,18 @@ import decode from "jwt-decode";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
-
-  const token = useSelector((state) => state.auth)
-  const [user, setUser] = useState(null)
+  const token = useSelector((state) => state.auth);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    if(token != null){
-      setUser(token.role)
+    if (token != null) {
+      setUser(token.role);
     }
-    console.log(user)
-  }, [token])
+    console.log(user);
+  }, [token]);
 
   return (
     <div className="App">
@@ -46,8 +46,11 @@ function App() {
             <Route path="/dashboard" exact component={Dashboard} />
             <Route path="/login" component={Login} />
             <Route path="/admin" component={Admin} />
-            <Route path="/history" component={History}/>
-            <Route path="/booking" component={Booking}/>
+            <Route path="/admin-rooms" component={RoomsAdmin} />
+            <Route path="/admin-bookings" component={BookingAdmin} />
+            <Route path="/admin-nodes" component={NodesAdmin} />
+            <Route path="/history" component={History} />
+            <Route path="/booking" component={Booking} />
             <Route path="*" component={NotFound} />
           </Switch>
         </Router>

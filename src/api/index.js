@@ -20,7 +20,12 @@ export const signIn = async (authData) => {
 
 export const getAllRooms = async () => API.get("/api/rooms");
 
-export const createRoom = async () => API.post("/api/rooms/create");
+export const getSpecificRoom = async (id) => API.get(`/api/rooms/${id}`);
+
+export const createRoom = async (data) => API.post("/api/rooms/create", data);
+
+export const editRoom = async (roomID, data) =>
+  API.put(`/api/rooms/${roomID}`, data);
 
 export const getAllNodes = async () => API.get("/api/nodes");
 

@@ -17,10 +17,10 @@ import AppbarUser from "../../../components/AppbarUser/AppbarUser";
 
 const Booking = () => {
   const [value, setValue] = useState(new Date());
-  const [startTime, setStart] = useState('');
-  const [endTime, setEnd] = useState('');
+  const [startTime, setStart] = useState("");
+  const [endTime, setEnd] = useState("");
 
-  const [timeList, setTimeList] = useState([])
+  const [timeList, setTimeList] = useState([]);
 
   const timeOption = [];
 
@@ -44,7 +44,12 @@ const Booking = () => {
               Select Booking Date
             </Typography>
 
-            <Grid sx={{ mt: 4, mb: 4 }} container direction="row" alignItems="center">
+            <Grid
+              sx={{ mt: 4, mb: 4 }}
+              container
+              direction="row"
+              alignItems="center"
+            >
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
                   disableFuture
@@ -58,18 +63,26 @@ const Booking = () => {
                   renderInput={(params) => <TextField {...params} />}
                 />
               </LocalizationProvider>
-              <Typography sx={{ mx: 2, fontWeight: "bold", fontSize: 16 }}>From</Typography>
+              <Typography sx={{ mx: 2, fontWeight: "bold", fontSize: 16 }}>
+                From
+              </Typography>
               <Select label="Start" autoWidth value={startTime}>
                 {timeOption.map((time) => (
-                  <MenuItem key={"start" + time} value={time}>{time}</MenuItem>
+                  <MenuItem key={"start" + time} value={time}>
+                    {time}
+                  </MenuItem>
                 ))}
               </Select>
 
-              <Typography sx={{ mx: 2, fontWeight: "bold", fontSize: 16 }}>To</Typography>
+              <Typography sx={{ mx: 2, fontWeight: "bold", fontSize: 16 }}>
+                To
+              </Typography>
 
-              <Select label="End" autoWidth value={endTime}> 
+              <Select label="End" autoWidth value={endTime}>
                 {timeOption.map((time) => (
-                  <MenuItem key={"end" + time} value={time}>{time}</MenuItem>
+                  <MenuItem key={"end" + time} value={time}>
+                    {time}
+                  </MenuItem>
                 ))}
               </Select>
             </Grid>
