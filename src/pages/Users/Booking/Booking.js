@@ -6,7 +6,7 @@ import {
   Grid,
   TextField,
   MenuItem,
-  Select
+  Select,
 } from "@mui/material";
 
 import DatePicker from "@mui/lab/DatePicker";
@@ -17,13 +17,16 @@ import AppbarUser from "../../../components/AppbarUser/AppbarUser";
 
 const Booking = () => {
   const [value, setValue] = useState(new Date());
-  const timeOption = []
+  const [startTime, setStart] = useState('');
+  const [endTime, setEnd] = useState('');
 
-  for(var hour=8; hour<17; hour++){
-    timeOption.push(hour.toString()+":00 UTC") 
-    }
+  const [timeList, setTimeList] = useState([])
 
-    console.log(timeOption)
+  const timeOption = [];
+
+  for (var hour = 8; hour < 18; hour++) {
+    timeOption.push(hour.toString() + ":00");
+  }
 
   return (
     <div>
@@ -41,7 +44,7 @@ const Booking = () => {
               Select Booking Date
             </Typography>
 
-            <Grid sx={{ mt: 4, mb: 4 }} container direction="row">
+            <Grid sx={{ mt: 4, mb: 4 }} container direction="row" alignItems="center">
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
                   disableFuture
@@ -55,27 +58,20 @@ const Booking = () => {
                   renderInput={(params) => <TextField {...params} />}
                 />
               </LocalizationProvider>
-              <Typography></Typography>
+              <Typography sx={{ mx: 2, fontWeight: "bold", fontSize: 16 }}>From</Typography>
+              <Select label="Start" autoWidth value={startTime}>
+                {timeOption.map((time) => (
+                  <MenuItem key={"start" + time} value={time}>{time}</MenuItem>
+                ))}
+              </Select>
 
-              {/* <TextField
-                name="start_time"
-                variant="outlined"
-                // error={error}
-                required
-                fullWidth
-                value={recordData[`${item.name}`]}
-                label={item.label}
-                // autoFocus={autofocus}
-                type={item.type}
-                select
-                disabled={item.editable === false}
-              >
-                {item.type === "option"
-                  ? item.option.map((option) => {
-                      return <MenuItem value={option}>{option}</MenuItem>;
-                    })
-                  : null}
-              </TextField> */}
+              <Typography sx={{ mx: 2, fontWeight: "bold", fontSize: 16 }}>To</Typography>
+
+              <Select label="End" autoWidth value={endTime}> 
+                {timeOption.map((time) => (
+                  <MenuItem key={"end" + time} value={time}>{time}</MenuItem>
+                ))}
+              </Select>
             </Grid>
           </Paper>
         </Grid>
