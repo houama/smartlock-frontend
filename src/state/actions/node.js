@@ -1,76 +1,98 @@
-import * as api from '../../api/index'
-import { returnError } from './error'
+import * as api from "../../api/index";
+import { returnError } from "./error";
 
 export const dataLoading = (isLoading) => async (dispatch) => {
-    dispatch({type: 'ACTION_LOADING', payload : isLoading})
-}
+  dispatch({ type: "ACTION_LOADING", payload: isLoading });
+};
 
 export const dataSuccess = (isSuccess) => async (dispatch) => {
-    dispatch({type: 'ACTION_SUCCESS', payload: isSuccess})
-}
+  dispatch({ type: "ACTION_SUCCESS", payload: isSuccess });
+};
 
-export const getData = () => async (dispatch) => {
-    dispatch(dataLoading(true))
-    try {
-        // const { data } = await api.getRecord()
-        // dispatch({type: 'FETCHRECORD', payload: data})
-        
-        dispatch(dataLoading(false))
-    }catch (error){
-        // console.log(error)
+export const getNodes = () => async (dispatch) => {
+  dispatch(dataLoading(true));
+  try {
+    const { data } = await api.getAllNodes();
 
-        dispatch(returnError(error.response.data, error.response.status))
-        dispatch(dataLoading(false))
-    }
-}
+    dispatch({ type: "FETCH_NODE", payload: data });
 
-export const createNode = (recordData) => async(dispatch) => {
-    
-    dispatch(dataLoading(true))
-    try{
-        // const { data } = await api.createNode(recordData)
-        
-        dispatch(dataLoading(false))
-        dispatch(dataSuccess(true))
+    dispatch(dataLoading(false));
+  } catch (error) {
+    // console.log(error)
 
-    } catch (error) {
-        // console.log(error)
+    dispatch(returnError(error.response.data, error.response.status));
+    dispatch(dataLoading(false));
+  }
+};
 
-        dispatch(returnError(error.response.data, error.response.status ))
-        dispatch(dataLoading(false))
-    }
-}
+export const getAvailableNodes = (id) => async (dispatch) => {
+  dispatch(dataLoading(true));
+  try {
+    const { data } = await api.getAllNodes();
 
-export const updateNode = (nodeID, recordData) => async(dispatch) => {
-    
-    dispatch(dataLoading(true))
-    try{
-        // const { data } = await api.updateRoom(nodeID, recordData)
-        // dispatch({type: 'UPDATE_NODE', payload: data})
-        dispatch(dataLoading(false))
-        dispatch(dataSuccess(true))
+    let availableNodes = [];
 
-    } catch (error) {
-        // console.log(error)
+    data.map((node) => {
+      if (node.Room === null || node.id === id) {
+        availableNodes.push({ id: node.id, name: node.name });
+      }
+    });
 
-        // dispatch(returnError(error.response.data, error.response.status ))
-        dispatch(dataLoading(false))
-    }
-}
+    console.log(availableNodes);
+    dispatch({ type: "AVAILABLE_NODE", payload: availableNodes });
 
-export const deleteNode = (recordId) => async(dispatch) => {
-    dispatch(dataLoading(true))
-    try{
-        // const { data } = await api.deleteNode(recordId)
+    dispatch(dataLoading(false));
+  } catch (error) {
+    // console.log(error)
 
-        // dispatch({type: 'DELETE_NODE', payload: data})
-        dispatch(dataLoading(false))
-        dispatch(dataSuccess(true))
-        
-    } catch (error){
-        // console.log(error)
+    dispatch(returnError(error.response.data, error.response.status));
+    dispatch(dataLoading(false));
+  }
+};
 
-        // dispatch(returnError(error.response.data, error.response.status ))
-        dispatch(dataLoading(false))
-    }
-}
+export const createNode = (recordData) => async (dispatch) => {
+  dispatch(dataLoading(true));
+  try {
+    const { data } = await api.createNode(recordData);
+
+    dispatch({ type: "FETCH_NODE", payload: data });
+    dispatch(dataLoading(false));
+    dispatch(dataSuccess(true));
+  } catch (error) {
+    // console.log(error)
+
+    dispatch(returnError(error.response.data, error.response.status));
+    dispatch(dataLoading(false));
+  }
+};
+
+export const updateNode = (nodeID, recordData) => async (dispatch) => {
+  dispatch(dataLoading(true));
+  try {
+    const { data } = await api.editNode(nodeID, recordData);
+    dispatch({ type: "FETCH_NODE", payload: data });
+    dispatch(dataLoading(false));
+    dispatch(dataSuccess(true));
+  } catch (error) {
+    // console.log(error)
+
+    // dispatch(returnError(error.response.data, error.response.status ))
+    dispatch(dataLoading(false));
+  }
+};
+
+export const deleteNode = (nodeID) => async (dispatch) => {
+  dispatch(dataLoading(true));
+  try {
+    const { data } = await api.deleteNode(nodeID);
+
+    dispatch({ type: "FETCH_NODE", payload: data });
+    dispatch(dataLoading(false));
+    dispatch(dataSuccess(true));
+  } catch (error) {
+    // console.log(error)
+
+    // dispatch(returnError(error.response.data, error.response.status ))
+    dispatch(dataLoading(false));
+  }
+};
