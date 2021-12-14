@@ -14,7 +14,6 @@ const Appbar = ({ title }) => {
             <span className={classes.navText}>Home</span>
           </Button>
         </div>
-        <Button color="inherit">Sign Up</Button>
       </Toolbar>
     </AppBar>
   );

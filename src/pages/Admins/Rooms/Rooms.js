@@ -8,6 +8,7 @@ import TableDialog from "../../../components/Dialog";
 import InputData from "./InputData";
 import { getRoom } from "../../../state/actions/room";
 import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
 
 const Rooms = () => {
   const [open, setOpen] = useState(false);
@@ -25,6 +26,8 @@ const Rooms = () => {
 
   const data = useSelector((state) => state.rooms);
 
+  console.log(data);
+
   let rows = [],
     columns = [];
 
@@ -34,8 +37,8 @@ const Rooms = () => {
     container["name"] = item.name;
     container["capacity"] = item.capacity;
     container["status"] = item.status;
-    container["createdAt"] = item.createdAt;
-    container["updatedAt"] = item.updatedAt;
+    container["createdAt"] = moment(item.createdAt).format("ddd, DD MMM YY");
+    container["updatedAt"] = moment(item.updatedAt).format("ddd, DD MMM YY");
     container["NodeId"] = item.NodeId;
     container["action"] = "";
     return container;
@@ -118,7 +121,7 @@ const Rooms = () => {
   };
 
   const handleDelete = (params) => {
-    setDeleteData([params.row.id, params.row.room_name]);
+    setDeleteData([params.row.id, params.row.name]);
     setIsDelete(true);
     setTitle("Delete Room");
     setOpen(true);

@@ -12,6 +12,12 @@ import {
   Box,
   MenuItem,
   IconButton,
+  List,
+  ListItem,
+  Divider,
+  ListItemText,
+  ListItemAvatar,
+  Avatar,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { Cancel } from "@mui/icons-material";
@@ -22,6 +28,7 @@ import {
   deleteNode,
   getAvailableNodes,
 } from "../state/actions/node";
+import { updateStatusBooking } from "../state/actions/booking";
 
 // import TableSnackBar from './TableSnackBar'
 
@@ -35,6 +42,7 @@ const TableDialog = ({
   isDelete,
   field,
   record,
+  roomData,
 }) => {
   const [open, setOpen] = useState(false);
   const [recordData, setRecordData] = useState(record);
@@ -83,6 +91,12 @@ const TableDialog = ({
         dispatch(updateRoom(recordData[`id`], recordData));
       } else if (menu === "node") {
         dispatch(updateNode(recordData[`id`], recordData));
+      } else if (menu === "booking") {
+        dispatch(
+          updateStatusBooking(recordData[`id`], {
+            status: recordData[`status`],
+          })
+        );
       }
     }
 
@@ -118,47 +132,123 @@ const TableDialog = ({
               {open &&
                 field.map((item) => {
                   if (isEdit) {
-                    return (
-                      <Grid item xs={12}>
-                        <TextField
-                          name={item.name}
-                          onChange={(e) =>
-                            setRecordData({
-                              ...recordData,
-                              [`${item.name}`]: e.target.value,
-                            })
-                          }
-                          variant="outlined"
-                          // error={error}
-                          required
-                          fullWidth
-                          value={recordData[`${item.name}`]}
-                          label={item.label}
-                          // autoFocus={autofocus}
-                          type={item.type}
-                          select={item.type === "option"}
-                          disabled={item.editable === false}
+                    if (item.name === "participant_list") {
+                      return (
+                        <List
+                          sx={{
+                            width: "100%",
+                            maxWidth: 360,
+                            bgcolor: "background.paper",
+                          }}
                         >
-                          {item.type === "option"
-                            ? item.name === "NodeId"
-                              ? NodesData &&
-                                NodesData.map((option) => {
-                                  return (
-                                    <MenuItem value={option.id}>
-                                      {option.name}
-                                    </MenuItem>
-                                  );
-                                })
-                              : item.option &&
-                                item.option.map((option) => {
-                                  return (
-                                    <MenuItem value={option}>{option}</MenuItem>
-                                  );
-                                })
-                            : null}
-                        </TextField>
-                      </Grid>
-                    );
+                          <Box
+                            display="flex"
+                            alignItems="center"
+                            marginLeft="25px"
+                            marginTop="10px"
+                          >
+                            <Typography
+                              sx={{ display: "flex", alignItems: "flex-start" }}
+                              variant="h7"
+                              color="text.primary"
+                              fontWeight="bold"
+                            >
+                              List of Participants
+                            </Typography>
+                          </Box>
+
+                          {recordData[`participant_list`].map((list, index) => {
+                            return (
+                              <>
+                                <ListItem alignItems="flex-start">
+                                  <ListItemAvatar>
+                                    <Avatar
+                                    // alt="Remy Sharp"
+                                    // src="/static/images/avatar/1.jpg"
+                                    />
+                                  </ListItemAvatar>
+                                  <ListItemText
+                                    primary={
+                                      <Typography
+                                        color="text.primary"
+                                        fontSize={14}
+                                      >
+                                        Participant {index + 1}
+                                      </Typography>
+                                    }
+                                    secondary={
+                                      <React.Fragment>
+                                        <Typography
+                                          sx={{ display: "inline" }}
+                                          component="span"
+                                          variant="body2"
+                                          color="text.primary"
+                                        >
+                                          {list}
+                                        </Typography>
+                                        {index === 0
+                                          ? " — " +
+                                            recordData[`user_booking_nim`]
+                                          : null}
+                                      </React.Fragment>
+                                    }
+                                  />
+                                </ListItem>
+                                <Divider variant="inset" component="li" />
+                              </>
+                            );
+                          })}
+                        </List>
+                      );
+                    } else {
+                      return (
+                        <Grid item xs={12}>
+                          <TextField
+                            name={item.name}
+                            onChange={(e) =>
+                              setRecordData({
+                                ...recordData,
+                                [`${item.name}`]: e.target.value,
+                              })
+                            }
+                            variant="outlined"
+                            // error={error}
+                            required
+                            fullWidth
+                            value={
+                              menu === "booking" && item.name === "room_name"
+                                ? roomData[`name`]
+                                : recordData[`${item.name}`]
+                            }
+                            label={item.label}
+                            // autoFocus={autofocus}
+                            type={item.type}
+                            select={item.type === "option"}
+                            disabled={item.editable === false}
+                          >
+                            {item.type === "option"
+                              ? item.name === "NodeId"
+                                ? NodesData &&
+                                  NodesData.map((option) => {
+                                    return (
+                                      <MenuItem value={option.id}>
+                                        {option.name}
+                                      </MenuItem>
+                                    );
+                                  })
+                                : item.option &&
+                                  item.option.map((option) => {
+                                    return (
+                                      <MenuItem value={option}>
+                                        {option}
+                                      </MenuItem>
+                                    );
+                                  })
+                              : null}
+                          </TextField>
+                        </Grid>
+                      );
+                    }
                   } else {
                     if (item.creatable) {
                       return (

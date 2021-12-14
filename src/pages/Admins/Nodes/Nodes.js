@@ -8,6 +8,7 @@ import TableDialog from "../../../components/Dialog";
 import InputData from "./InputData";
 import { getNodes } from "../../../state/actions/node";
 import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
 
 const Nodes = () => {
   const [open, setOpen] = useState(false);
@@ -25,6 +26,8 @@ const Nodes = () => {
 
   const data = useSelector((state) => state.nodes);
 
+  console.log("nodes:", data);
+
   let rows = [],
     columns = [];
 
@@ -35,10 +38,13 @@ const Nodes = () => {
     container["version"] = item.version;
     container["status"] = item.status;
     container["last_check"] = item.last_check;
-    container["RoomId"] = item.RoomId;
-    container["RoomName"] = item.Room.name;
-    container["createdAt"] = item.createdAt;
-    container["updatedAt"] = item.updatedAt;
+    if (item.Room !== null) {
+      container["RoomId"] = item.Room.id;
+      container["RoomName"] = item.Room.name;
+    }
+
+    container["createdAt"] = moment(item.createdAt).format("ddd, DD MMM YY");
+    container["updatedAt"] = moment(item.updatedAt).format("ddd, DD MMM YY");
     container["action"] = "";
     return container;
   });
@@ -138,7 +144,7 @@ const Nodes = () => {
         record={
           isEdit
             ? { id: "", name: "", version: "", room_name: "", status: "" }
-            : { name: "" }
+            : { name: "", version: "" }
         }
         handleClose={handleClose}
       />

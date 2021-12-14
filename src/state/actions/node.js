@@ -13,7 +13,7 @@ export const getNodes = () => async (dispatch) => {
   dispatch(dataLoading(true));
   try {
     const { data } = await api.getAllNodes();
-    console.log(data);
+
     dispatch({ type: "FETCH_NODE", payload: data });
 
     dispatch(dataLoading(false));
@@ -55,6 +55,7 @@ export const createNode = (recordData) => async (dispatch) => {
   try {
     const { data } = await api.createNode(recordData);
 
+    dispatch({ type: "FETCH_NODE", payload: data });
     dispatch(dataLoading(false));
     dispatch(dataSuccess(true));
   } catch (error) {
@@ -69,7 +70,7 @@ export const updateNode = (nodeID, recordData) => async (dispatch) => {
   dispatch(dataLoading(true));
   try {
     const { data } = await api.editNode(nodeID, recordData);
-    // dispatch({type: 'UPDATE_NODE', payload: data})
+    dispatch({ type: "FETCH_NODE", payload: data });
     dispatch(dataLoading(false));
     dispatch(dataSuccess(true));
   } catch (error) {
@@ -85,7 +86,7 @@ export const deleteNode = (nodeID) => async (dispatch) => {
   try {
     const { data } = await api.deleteNode(nodeID);
 
-    // dispatch({type: 'DELETE_NODE', payload: data})
+    dispatch({ type: "FETCH_NODE", payload: data });
     dispatch(dataLoading(false));
     dispatch(dataSuccess(true));
   } catch (error) {

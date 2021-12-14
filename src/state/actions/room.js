@@ -25,11 +25,27 @@ export const getRoom = () => async (dispatch) => {
   }
 };
 
+export const getSpecificRoom = (id) => async (dispatch) => {
+  dispatch(dataLoading(true));
+  try {
+    const { data } = await api.getSpecificRoom(id);
+    console.log(data);
+    dispatch({ type: "FETCH_ROOM", payload: data });
+
+    dispatch(dataLoading(false));
+  } catch (error) {
+    // console.log(error)
+
+    // dispatch(returnError(error.response.data, error.response.status))
+    dispatch(dataLoading(false));
+  }
+};
+
 export const createRoom = (roomData) => async (dispatch) => {
   dispatch(dataLoading(true));
   try {
     const { data } = await api.createRoom(roomData);
-
+    dispatch({ type: "FETCH_ROOM", payload: data });
     dispatch(dataLoading(false));
     dispatch(dataSuccess(true));
   } catch (error) {
@@ -44,7 +60,7 @@ export const updateRoom = (roomID, recordData) => async (dispatch) => {
   dispatch(dataLoading(true));
   try {
     const { data } = await api.editRoom(roomID, recordData);
-    // dispatch({type: 'UPDATE_ROOM', payload: data})
+    dispatch({ type: "FETCH_ROOM", payload: data });
     dispatch(dataLoading(false));
     dispatch(dataSuccess(true));
   } catch (error) {
@@ -58,9 +74,9 @@ export const updateRoom = (roomID, recordData) => async (dispatch) => {
 export const deleteRoom = (recordId) => async (dispatch) => {
   dispatch(dataLoading(true));
   try {
-    // const { data } = await api.deleteRoom(recordId)
+    const { data } = await api.deleteRoom(recordId);
 
-    // dispatch({type: 'DELETE_ROOM', payload: data})
+    dispatch({ type: "FETCH_ROOM", payload: data });
     dispatch(dataLoading(false));
     dispatch(dataSuccess(true));
   } catch (error) {

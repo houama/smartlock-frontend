@@ -15,6 +15,7 @@ const InputData = [
     label: "Node version",
     name: "version",
     type: "text",
+    creatable: true,
   },
   {
     label: "Room name",
