@@ -5,6 +5,8 @@ import auth from "./auth";
 import error from "./error";
 import bookingReducer from "./bookingReducer";
 import dashboardReducer from "./dashboardReducer";
+import userRooms from "./userRooms";
+import userSearchUser from "./userSearchUser";
 
 const reducers = combineReducers({
   dashboards: dashboardReducer,
@@ -13,6 +15,8 @@ const reducers = combineReducers({
   bookings: bookingReducer,
   auth: auth,
   error: error,
+  userRooms: userRooms,
+  userSearchUser: userSearchUser,
 });
 
 export default reducers;
