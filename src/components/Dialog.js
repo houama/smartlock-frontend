@@ -45,7 +45,9 @@ const TableDialog = ({
   roomData,
 }) => {
   const [open, setOpen] = useState(false);
-  const [recordData, setRecordData] = useState(record);
+  const [recordData, setRecordData] = useState();
+  console.log(record);
+  console.log(recordData);
 
   const NodesData = useSelector((state) => state.nodes.availableNodes);
 
@@ -63,6 +65,7 @@ const TableDialog = ({
         }
       }
     } else {
+      setRecordData(record);
       dispatch(getAvailableNodes());
     }
 
@@ -84,6 +87,7 @@ const TableDialog = ({
       if (menu === "room") {
         dispatch(createRoom(recordData));
       } else if (menu === "node") {
+        console.log(recordData);
         dispatch(createNode(recordData));
       }
     } else {
@@ -251,6 +255,8 @@ const TableDialog = ({
                     }
                   } else {
                     if (item.creatable) {
+                      console.log(recordData);
+                      console.log(item.name);
                       return (
                         <Grid item xs={12}>
                           <TextField

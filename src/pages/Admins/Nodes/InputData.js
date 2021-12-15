@@ -4,6 +4,7 @@ const InputData = [
     name: "id",
     type: "text",
     editable: false,
+    creatable: false,
   },
   {
     label: "Node name",
@@ -22,12 +23,14 @@ const InputData = [
     name: "RoomName",
     type: "text",
     editable: false,
+    creatable: false,
   },
   {
     label: "Status",
     name: "status",
     type: "option",
     option: ["Active", "Not Active"],
+    creatable: false,
   },
 ];
 
