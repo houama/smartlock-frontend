@@ -32,7 +32,6 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    document.title = "E-Library"
     if (token != null) {
       setUser(token.role);
     }
