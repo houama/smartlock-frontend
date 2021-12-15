@@ -17,6 +17,7 @@ import Admin from "./pages/Dashboard/Admin";
 
 import History from "./pages/Users/History/History";
 import Booking from "./pages/Users/Booking/Booking";
+import CreateBooking from "./pages/Users/Booking/CreateBooking"
 
 import Cookies from "js-cookie";
 import decode from "jwt-decode";
@@ -31,6 +32,7 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+    document.title = "E-Library"
     if (token != null) {
       setUser(token.role);
     }
@@ -51,6 +53,7 @@ function App() {
             <Route path="/admin-nodes" component={NodesAdmin} />
             <Route path="/history" component={History} />
             <Route path="/booking" component={Booking} />
+            <Route path="/createbooking" component={CreateBooking}/>
             <Route path="*" component={NotFound} />
           </Switch>
         </Router>
