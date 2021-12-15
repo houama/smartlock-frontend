@@ -18,6 +18,9 @@ export const signIn = async (authData) => {
   return API.post("/api/auth/login", authData);
 };
 
+// Dashboard
+export const getDashboardData = async () => API.get("/api/admin/data");
+
 // Bookings
 export const getAllBookings = async () => API.get("/api/bookings");
 
