@@ -19,6 +19,11 @@ export const signIn = (authData) => async (dispatch) => {
     .catch((err) => {});
 };
 
+export const signUp = (authData, history) => async (dispatch) => {
+  api.signUp(authData);
+  history.push("/");
+};
+
 export const logOut = (history) => async (dispatch) => {
   Cookies.remove("token");
   dispatch({ type: "LOGOUT" });
