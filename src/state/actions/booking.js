@@ -56,3 +56,42 @@ export const deleteBooking = (recordId) => async (dispatch) => {
     dispatch(dataLoading(false));
   }
 };
+
+export const checkRoom = (date, time) => async (dispatch) => {
+  dispatch({ type: "LOADINGROOM", payload: true });
+  api
+    .userCheckRoom(date, time.start, time.end)
+    .then((res) => {
+      dispatch({ type: "USERCHECKROOM", payload: res.data.room });
+    })
+    .catch((err) => {});
+};
+
+export const searchUser = (nim) => async (dispatch) => {
+  dispatch({ type: "LOADINGSEARCH", payload: true });
+  api
+    .userSearchUser(nim)
+    .then((res) => {
+      const { data } = res;
+      const payload = data.map((item) => ({
+        name: item.first_name + " " + item.last_name,
+        nim: item.nim,
+      }))
+
+      dispatch({ type: "USERSEARCHUSER", payload: payload });
+    })
+    .catch((err) => {
+        dispatch({type: "ERROR", payload: err})
+    });
+};
+
+export const userCreateBooking = (nim, roomID, startDate, endDate, participant) => async (dispatch) => {
+  dispatch({ type: "LOADINGBOOKING", payload: true });
+  api.userCreateBooking(nim, roomID, startDate, endDate, participant)
+  .then((res) => {
+    dispatch({ type: "USERCREATEBOOKING", payload: res.data});
+  })
+  .catch((err) => {
+    dispatch({type: "ERROR", payload: err})
+  })
+}

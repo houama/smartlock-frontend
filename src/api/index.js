@@ -55,3 +55,28 @@ export const editNode = async (nodeID, data) =>
 
 export const deleteNode = async (nodeID) =>
   API.delete(`/api/nodes/${nodeID}`).then(getAllNodes);
+
+  export const userCheckRoom = async (date, start_time, end_time) => {
+    return API.get(`/api/bookings/checkroom`, 
+    {
+      params: {
+        date : date,
+        start_time: start_time,
+        end_time : end_time
+      }
+    });
+  };
+  
+  export const userSearchUser = async (nim) => {
+    return API.get(`/api/users/${nim}`)
+  }
+  
+  export const userCreateBooking = async (nim, roomID, startDate, endDate, participant) => {
+    return API.post(`/api/bookings`, {
+      user_booking_nim: nim,
+      room_id: roomID,
+      start_date: startDate,
+      end_date: endDate,
+      participant : participant
+    })
+  }
