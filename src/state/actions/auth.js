@@ -24,13 +24,11 @@ export const signUp = (authData, history) => async (dispatch) => {
   history.push("/");
 };
 
-export const logOut = (history) => async (dispatch) => {
+export const logOut = () => async (dispatch) => {
   Cookies.remove("token");
   dispatch({ type: "LOGOUT" });
-
-  history.push("/");
 };
 
 export const setLoggedUser = (token) => async (dispatch) => {
   dispatch({ type: "LOGIN_SUCCESS", payload: decode(token) });
-}
+};

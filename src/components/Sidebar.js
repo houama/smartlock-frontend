@@ -138,7 +138,8 @@ const Sidebar = ({ selectedDrawer }) => {
   const [open, setOpen] = React.useState(true);
 
   const handleLogout = () => {
-    dispatch(logOut(history));
+    dispatch(logOut());
+    history.replace("/");
   };
 
   // Open drawer

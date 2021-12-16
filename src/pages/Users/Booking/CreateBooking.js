@@ -57,7 +57,7 @@ const CreateBooking = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingBooking, setIsLoadingBooking] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -69,10 +69,10 @@ const CreateBooking = () => {
       if (bookingStatus.err != null && bookingStatus.err != "") {
         setIsError((prev) => !prev);
         setErrMessage(bookingStatus.err);
-      }else{
-        setIsLoadingBooking(bookingStatus.isLoading)
-        if(bookingStatus.data?.length != 0){
-          setIsSuccess((prev) => !prev)
+      } else {
+        setIsLoadingBooking(bookingStatus.isLoading);
+        if (bookingStatus.data?.length != 0) {
+          setIsSuccess((prev) => !prev);
         }
       }
     }
@@ -128,6 +128,7 @@ const CreateBooking = () => {
   };
 
   const handleCreateBooking = () => {
+    console.log(listUID);
     if (
       idRoom != null &&
       date != null &&
@@ -154,7 +155,7 @@ const CreateBooking = () => {
 
   return (
     <div>
-      <DialogStatus isOpen={isSuccess}/>
+      <DialogStatus isOpen={isSuccess} />
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={isLoadingBooking}
