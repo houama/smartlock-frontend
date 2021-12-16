@@ -25,3 +25,7 @@ export const logOut = (history) => async (dispatch) => {
 
   history.push("/");
 };
+
+export const setLoggedUser = (token) => async (dispatch) => {
+  dispatch({ type: "LOGIN_SUCCESS", payload: decode(token) });
+}

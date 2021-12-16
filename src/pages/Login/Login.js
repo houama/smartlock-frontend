@@ -59,7 +59,6 @@ const Login = () => {
     }
 
     useEffect(() => {
-        // document.body.classList.add(classes.body)
         
         if(auth != null){
             switch(auth.role){

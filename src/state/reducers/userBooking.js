@@ -12,6 +12,8 @@ const userBooking = (state = initialState, action) => {
       return { ...state, isLoading: action.payload, err: null };
     case "ERRORBOOKING":
       return { ...state, err: action.payload, isLoading: false };
+    case "CLEARBOOKING":
+      return state;
     default:
       return state;
   }

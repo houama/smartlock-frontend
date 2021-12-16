@@ -4,8 +4,9 @@ import roomReducer from "./roomReducer";
 import auth from "./auth";
 import error from "./error";
 import bookingReducer from "./bookingReducer";
-import userRooms from './userRooms'
+import userRooms from "./userRooms";
 import userSearchUser from "./userSearchUser";
+import userBooking from "./userBooking";
 
 const reducers = combineReducers({
   rooms: roomReducer,
@@ -13,8 +14,9 @@ const reducers = combineReducers({
   bookings: bookingReducer,
   auth: auth,
   error: error,
-  userRooms : userRooms,
+  userRooms: userRooms,
   userSearchUser: userSearchUser,
+  userBooking: userBooking,
 });
 
 export default reducers;

@@ -41,7 +41,7 @@ const Dashboard = () => {
         <Grid
           container
           spacing={2}
-          direction="row"
+          direction={{xs: "column", md: "row"}}
           justifyContent="center"
           alignItems="center"
         >
