@@ -6,7 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 
-import { useHistory } from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Login from "./pages/Login/Login";
@@ -19,7 +19,7 @@ import Admin from "./pages/Dashboard/Admin";
 
 import History from "./pages/Users/History/History";
 import Booking from "./pages/Users/Booking/Booking";
-import CreateBooking from "./pages/Users/Booking/CreateBooking"
+import CreateBooking from "./pages/Users/Booking/CreateBooking";
 
 import Cookies from "js-cookie";
 import decode from "jwt-decode";
@@ -29,23 +29,22 @@ import theme from "./theme";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { setLoggedUser } from "./state/actions/auth"
+import { setLoggedUser } from "./state/actions/auth";
 
 function App() {
-  const history = useHistory()
-  const dispatch = useDispatch()
-  const token = useSelector((state) => state.auth);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.auth);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     if (token != null) {
       setUser(token.role);
-    }else {
-      const browserToken = Cookies.get("token")
-      if(browserToken != null){
-        dispatch(setLoggedUser(browserToken))
+    } else {
+      const browserToken = Cookies.get("token");
+      if (browserToken != null) {
+        dispatch(setLoggedUser(browserToken));
       }
-      
     }
   }, [token]);
 
@@ -63,7 +62,7 @@ function App() {
             <Route path="/admin-nodes" component={NodesAdmin} />
             <Route path="/history" component={History} />
             <Route path="/booking" component={Booking} />
-            <Route path="/createbooking" component={CreateBooking}/>
+            <Route path="/createbooking" component={CreateBooking} />
             <Route path="*" component={NotFound} />
           </Switch>
         </Router>

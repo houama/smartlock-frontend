@@ -37,7 +37,7 @@ const CreateBooking = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const participant = useSelector((state) => state.userSearchUser);
-  const currentUser = useSelector((state) => state.auth);
+  const currentUser = useSelector((state) => state.auth.auth);
   const bookingStatus = useSelector((state) => state.userBooking);
 
   const idRoom = location.state?.idRoom;
@@ -128,7 +128,6 @@ const CreateBooking = () => {
   };
 
   const handleCreateBooking = () => {
-    console.log(listUID);
     if (
       idRoom != null &&
       date != null &&
