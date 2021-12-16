@@ -86,3 +86,7 @@ export const deleteRoom = (recordId) => async (dispatch) => {
     dispatch(dataLoading(false));
   }
 };
+
+export const resetRoom = () => async (dispatch) => {
+  dispatch({ type: "CLEARROOM" });
+};

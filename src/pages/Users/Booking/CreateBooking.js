@@ -71,6 +71,7 @@ const CreateBooking = () => {
         setErrMessage(bookingStatus.err);
       } else {
         setIsLoadingBooking(bookingStatus.isLoading);
+        console.log(bookingStatus.data);
         if (bookingStatus.data?.length != 0) {
           setIsSuccess((prev) => !prev);
         }

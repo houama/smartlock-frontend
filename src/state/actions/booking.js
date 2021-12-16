@@ -62,7 +62,7 @@ export const checkRoom = (date, time) => async (dispatch) => {
   api
     .userCheckRoom(date, time.start, time.end)
     .then((res) => {
-      dispatch({ type: "USERCHECKROOM", payload: res.data.room });
+      dispatch({ type: "USERCHECKROOM", payload: res.data.rooms });
     })
     .catch((err) => {});
 };
@@ -103,6 +103,6 @@ export const userCreateBooking =
       });
   };
 
-  export const resetUserCreateBooking =  () => async (dispatch) => {
-    dispatch({ type: "CLEAR" })
-  }
+export const resetUserCreateBooking = () => async (dispatch) => {
+  dispatch({ type: "CLEARBOOKING" });
+};
