@@ -16,12 +16,28 @@ export const signIn = (authData) => async (dispatch) => {
 
       dispatch({ type: "LOGIN_SUCCESS", payload: decode(token) });
     })
-    .catch((err) => {});
+    .catch((err) => {
+      console.log(err.response.data);
+      dispatch({
+        type: "ERRORAUTH",
+        payload: err.response.data,
+      });
+    });
 };
 
 export const signUp = (authData, history) => async (dispatch) => {
-  api.signUp(authData);
-  history.push("/");
+  api
+    .signUp(authData)
+    .then((res) => {
+      history.push("/");
+    })
+    .catch((err) => {
+      console.log(err.response.data);
+      dispatch({
+        type: "ERRORAUTH",
+        payload: err.response.data.errors,
+      });
+    });
 };
 
 export const logOut = () => async (dispatch) => {

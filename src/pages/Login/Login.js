@@ -18,6 +18,7 @@ import Appbar from "../../components/Appbar";
 
 import { useDispatch, useSelector } from "react-redux";
 import { signIn, signUp } from "../../state/actions/auth";
+import SnackbarError from "../../components/Utils/SnackbarError";
 
 const Login = () => {
   const classes = useStyles();
@@ -26,7 +27,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState();
   const [authData, setAuthData] = useState({ email: "", password: "" });
 
   //Redux
@@ -60,8 +61,8 @@ const Login = () => {
   useEffect(() => {
     // document.body.classList.add(classes.body)
 
-    if (auth != null) {
-      switch (auth.role) {
+    if (auth.auth != null) {
+      switch (auth.auth.role) {
         case "user":
           history.push("/dashboard");
           break;
@@ -72,6 +73,17 @@ const Login = () => {
 
         default:
       }
+    }
+
+    if (auth.err != null && auth.err != "") {
+      // auth.err.map((msg, index) => {
+      //   if (msg[index].email !== undefined) {
+      //     console.log(msg[index].email);
+      //   }
+      // });
+
+      setIsError((prev) => !prev);
+      setErrorMsg(auth.err);
     }
   }, [auth]);
 
@@ -95,18 +107,86 @@ const Login = () => {
               <Grid container spacing={2} marginTop={4}>
                 {isSignUp && (
                   <>
-                    <Input name="nim" label="NIM" handleChange={handleChange} />
-                    <Input name="uid" label="UID" handleChange={handleChange} />
+                    <Input
+                      name="nim"
+                      label="NIM"
+                      handleChange={handleChange}
+                      error={isError}
+                    />
+                    {isError && (
+                      <Typography
+                        className={classes.error}
+                        align="center"
+                        color="error"
+                        sx={{ p: 2 }}
+                      >
+                        {errorMsg.map((msg) => {
+                          if (msg.nim) {
+                            return msg.nim;
+                          }
+                        })}
+                      </Typography>
+                    )}
+                    <Input
+                      name="uid"
+                      label="UID"
+                      handleChange={handleChange}
+                      error={isError}
+                    />
+                    {isError && (
+                      <Typography
+                        className={classes.error}
+                        align="center"
+                        color="error"
+                        sx={{ p: 2 }}
+                      >
+                        {errorMsg.map((msg) => {
+                          if (msg.uid) {
+                            return msg.uid;
+                          }
+                        })}
+                      </Typography>
+                    )}
                     <Input
                       name="first_name"
                       label="First Name"
                       handleChange={handleChange}
+                      error={isError}
                     />
+                    {isError && (
+                      <Typography
+                        className={classes.error}
+                        align="center"
+                        color="error"
+                        sx={{ p: 2 }}
+                      >
+                        {errorMsg.map((msg) => {
+                          if (msg.first_name) {
+                            return msg.first_name;
+                          }
+                        })}
+                      </Typography>
+                    )}
                     <Input
                       name="last_name"
                       label="Last Name"
                       handleChange={handleChange}
+                      error={isError}
                     />
+                    {isError && (
+                      <Typography
+                        className={classes.error}
+                        align="center"
+                        color="error"
+                        sx={{ p: 2 }}
+                      >
+                        {errorMsg.map((msg) => {
+                          if (msg.last_name) {
+                            return msg.last_name;
+                          }
+                        })}
+                      </Typography>
+                    )}
                   </>
                 )}
 
@@ -117,6 +197,20 @@ const Login = () => {
                   autoFocus
                   error={isError}
                 />
+                {isError && isSignUp && (
+                  <Typography
+                    className={classes.error}
+                    align="center"
+                    color="error"
+                    sx={{ p: 2 }}
+                  >
+                    {errorMsg.map((msg) => {
+                      if (msg.email) {
+                        return msg.email;
+                      }
+                    })}
+                  </Typography>
+                )}
 
                 <Input
                   name="password"
@@ -126,9 +220,23 @@ const Login = () => {
                   handleShowPassword={handleShowPassword}
                   error={isError}
                 />
+                {isError && isSignUp && (
+                  <Typography
+                    className={classes.error}
+                    align="center"
+                    color="error"
+                    sx={{ p: 2 }}
+                  >
+                    {errorMsg.map((msg) => {
+                      if (msg.password) {
+                        return msg.password;
+                      }
+                    })}
+                  </Typography>
+                )}
               </Grid>
 
-              {isError && (
+              {isError && !isSignUp && (
                 <Typography
                   className={classes.error}
                   align="center"

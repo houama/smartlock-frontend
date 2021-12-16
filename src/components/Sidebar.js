@@ -12,6 +12,8 @@ import SpeedIcon from "@mui/icons-material/Speed";
 import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import MemoryIcon from "@mui/icons-material/Memory";
+import { useSelector } from "react-redux";
+import AccountCircle from "@mui/icons-material/AccountCircle";
 import {
   Button,
   Typography,
@@ -132,6 +134,8 @@ const Sidebar = ({ selectedDrawer }) => {
   const classes = useStyles();
   const history = useHistory();
 
+  const auth = useSelector((state) => state.auth);
+
   // React Redux
   const dispatch = useDispatch();
 
@@ -179,6 +183,10 @@ const Sidebar = ({ selectedDrawer }) => {
               <span className={classes.navText}>Home</span>
             </Button>
           </div>
+          <Typography sx={{ mr: 2, display: { xs: "none", md: "flex" } }}>
+            {auth.auth != null && auth.auth.name}
+          </Typography>
+          <AccountCircle />
           <Button color="inherit" onClick={handleLogout}>
             Logout
           </Button>

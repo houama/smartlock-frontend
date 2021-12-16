@@ -20,10 +20,10 @@ import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { logOut } from "../../state/actions/auth"
+import { logOut } from "../../state/actions/auth";
 
 const AppbarUser = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorElNav, setAnchorElNav] = useState(null);
 
@@ -48,18 +48,17 @@ const AppbarUser = () => {
   };
 
   const onMenuClick = (e) => {
-    if(e.target.name == "/dashboard"){
+    if (e.target.name == "/dashboard") {
       history.replace(e.target.name);
-    }else {
-      history.replace(e.target.name)
+    } else {
+      history.replace(e.target.name);
     }
-    
   };
 
   const onLogout = (e) => {
-    dispatch(logOut())
-    history.replace("/")
-  }
+    dispatch(logOut());
+    history.replace("/");
+  };
 
   return (
     <div>
@@ -98,7 +97,7 @@ const AppbarUser = () => {
               <MenuItem name="/dashboard" onClick={onMenuClick}>
                 <Typography textAlign="center">Home</Typography>
               </MenuItem>
-              <MenuItem onClick={onMenuClick}>
+              <MenuItem name="/history" onClick={onMenuClick}>
                 <Typography textAlign="center">History</Typography>
               </MenuItem>
             </Menu>
@@ -108,13 +107,17 @@ const AppbarUser = () => {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2, display: {xs: "none", md: 'flex'} }}
+            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
           />
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ mr: 2, fontWeight: 1000, display: { xs: 'none', md: 'flex' } }}
+            sx={{
+              mr: 2,
+              fontWeight: 1000,
+              display: { xs: "none", md: "flex" },
+            }}
           >
             E-Library
           </Typography>
@@ -143,8 +146,8 @@ const AppbarUser = () => {
               History
             </Button>
           </Box>
-          <Typography sx={{mr: 2, display : {xs : "none", md : "flex"}}}>
-            {auth != null && auth.name + " (" + auth.nim + ")"}
+          <Typography sx={{ mr: 2, display: { xs: "none", md: "flex" } }}>
+            {auth.auth != null && auth.auth.name + " (" + auth.auth.nim + ")"}
           </Typography>
           <IconButton
             size="large"
@@ -171,7 +174,9 @@ const AppbarUser = () => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem sx={{display : {md : "none", xs: "flex"}}} >{auth != null && auth.name + " (" + auth.nim + ")"}</MenuItem>
+            <MenuItem sx={{ display: { md: "none", xs: "flex" } }}>
+              {auth.auth != null && auth.auth.name + " (" + auth.auth.nim + ")"}
+            </MenuItem>
             <MenuItem onClick={onLogout}>Logout</MenuItem>
           </Menu>
         </Toolbar>
