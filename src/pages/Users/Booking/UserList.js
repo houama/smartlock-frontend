@@ -22,23 +22,34 @@ import {
 } from "@mui/material";
 
 import CheckIcon from "@mui/icons-material/Check";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 
 const UserList = ({ user, addUser }) => {
   return (
     <div>
       <List
         dense
-        sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+        sx={{
+          maxHeight: 300,
+          "& ul": { padding: 0 },
+          position: "relative",
+          overflow: "auto",
+          width: "100%",
+          bgcolor: "background.paper",
+        }}
       >
         {user.map((value) => {
           const labelId = `checkbox-list-secondary-label-${value}`;
           return (
             <ListItem
-              key={value.nim}
+              key={value.nim + "listItem"}
               dense={true}
               secondaryAction={
-                <IconButton id={value.nim} onClick={e => addUser(value)} edge="end">
+                <IconButton
+                  id={value.nim}
+                  onClick={(e) => addUser(value)}
+                  edge="end"
+                >
                   <AddIcon />
                 </IconButton>
               }

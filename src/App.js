@@ -6,6 +6,8 @@ import {
   Redirect,
 } from "react-router-dom";
 
+import { useHistory } from 'react-router-dom'
+
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Login from "./pages/Login/Login";
 import BookingAdmin from "./pages/Admins/Bookings/Bookings";
@@ -27,15 +29,24 @@ import theme from "./theme";
 
 import { useDispatch, useSelector } from "react-redux";
 
+import { setLoggedUser } from "./state/actions/auth"
+
 function App() {
+  const history = useHistory()
+  const dispatch = useDispatch()
   const token = useSelector((state) => state.auth);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     if (token != null) {
       setUser(token.role);
+    }else {
+      const browserToken = Cookies.get("token")
+      if(browserToken != null){
+        dispatch(setLoggedUser(browserToken))
+      }
+      
     }
-    console.log(user);
   }, [token]);
 
   return (

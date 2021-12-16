@@ -76,22 +76,33 @@ export const searchUser = (nim) => async (dispatch) => {
       const payload = data.map((item) => ({
         name: item.first_name + " " + item.last_name,
         nim: item.nim,
-      }))
+        uid: item.uid,
+      }));
 
       dispatch({ type: "USERSEARCHUSER", payload: payload });
     })
     .catch((err) => {
-        dispatch({type: "ERROR", payload: err})
+      dispatch({ type: "ERRORSEARCH", payload: err });
     });
 };
 
-export const userCreateBooking = (nim, roomID, startDate, endDate, participant) => async (dispatch) => {
-  dispatch({ type: "LOADINGBOOKING", payload: true });
-  api.userCreateBooking(nim, roomID, startDate, endDate, participant)
-  .then((res) => {
-    dispatch({ type: "USERCREATEBOOKING", payload: res.data});
-  })
-  .catch((err) => {
-    dispatch({type: "ERROR", payload: err})
-  })
-}
+export const userCreateBooking =
+  (nim, roomID, startDate, endDate, participant) => async (dispatch) => {
+    dispatch({ type: "LOADINGBOOKING", payload: true });
+    api
+      .userCreateBooking(nim, roomID, startDate, endDate, participant)
+      .then((res) => {
+        dispatch({ type: "USERCREATEBOOKING", payload: res.data });
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        dispatch({
+          type: "ERRORBOOKING",
+          payload: err.response.status + " " + err.response.statusText,
+        });
+      });
+  };
+
+  export const resetUserCreateBooking =  () => async (dispatch) => {
+    dispatch({ type: "CLEAR" })
+  }

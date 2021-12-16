@@ -18,9 +18,12 @@ import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import { useHistory } from "react-router-dom";
 
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import { logOut } from "../../state/actions/auth"
 
 const AppbarUser = () => {
+  const dispatch = useDispatch()
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorElNav, setAnchorElNav] = useState(null);
 
@@ -45,8 +48,18 @@ const AppbarUser = () => {
   };
 
   const onMenuClick = (e) => {
-    history.push(e.target.name);
+    if(e.target.name == "/dashboard"){
+      history.replace(e.target.name);
+    }else {
+      history.replace(e.target.name)
+    }
+    
   };
+
+  const onLogout = (e) => {
+    dispatch(logOut())
+    history.replace("/")
+  }
 
   return (
     <div>
@@ -130,7 +143,7 @@ const AppbarUser = () => {
               History
             </Button>
           </Box>
-          <Typography sx={{mr: 2}}>
+          <Typography sx={{mr: 2, display : {xs : "none", md : "flex"}}}>
             {auth != null && auth.name + " (" + auth.nim + ")"}
           </Typography>
           <IconButton
@@ -158,7 +171,8 @@ const AppbarUser = () => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem sx={{display : {md : "none", xs: "flex"}}} >{auth != null && auth.name + " (" + auth.nim + ")"}</MenuItem>
+            <MenuItem onClick={onLogout}>Logout</MenuItem>
           </Menu>
         </Toolbar>
       </AppBar>

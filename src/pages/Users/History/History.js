@@ -1,9 +1,10 @@
 import React from 'react'
+import AppbarUser from "../../../components/AppbarUser/AppbarUser";
 
 const History = () => {
     return (
         <div>
-            History Page
+            <AppbarUser/>
         </div>
     )
 }
